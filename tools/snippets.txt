@@ -1,0 +1,5 @@
+# To start, stop or create a server instance.
+tools/services.py server -b server/<subname> -n paper-mc-<subname> -p 30065:25565,30075:25575 <build|start|stop>
+
+# To start, stop or create a proxy instance.
+tools/services.py proxy -b proxy/<subname> -n paper-mc-<subname> -p 30065:25565,30075:25575 <build|start|stop>
