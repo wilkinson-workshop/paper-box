@@ -3,3 +3,11 @@ tools/services.py server -b server/<subname> -n paper-mc-<subname> -p 30065:2556
 
 # To start, stop or create a proxy instance.
 tools/services.py proxy -b proxy/<subname> -n paper-mc-<subname> -p 30065:25565,30075:25575 <build|start|stop>
+
+# To create a docker network and connect server nodes to the proxy.
+docker network create paper-mc-network
+docker network connect paper-mc-network <container>
+
+# To get the docker internal network schema. This will produce JSON
+# with container IP addresses.
+docker inspect paper-mc-network
