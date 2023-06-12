@@ -2,15 +2,15 @@
 config-version = "2.6"
 
 # What port should the proxy be bound to? By default, we'll bind to all addresses on port 25577.
-bind = "0.0.0.0:25577"
+bind = "0.0.0.0:25565"
 
 # What should be the MOTD? This gets displayed when the player adds your server to
 # their server list. Only MiniMessage format is accepted.
-motd = "<#09add3>A Velocity Server"
+motd = "<#09add3>Aabernathy powered by PaperMC & Velocity"
 
 # What should we display for the maximum number of players? (Velocity does not support a cap
 # on the number of players online.)
-show-max-players = 500
+show-max-players = 100
 
 # Should we authenticate players with Mojang? By default, this is on.
 online-mode = true
@@ -34,7 +34,7 @@ prevent-client-proxy-connections = false
 #                  unable to implement network level firewalling (on a shared host).
 # - "modern":      Forward player IPs and UUIDs as part of the login process using
 #                  Velocity's native forwarding. Only applicable for Minecraft 1.13 or higher.
-player-info-forwarding-mode = "NONE"
+player-info-forwarding-mode = "modern"
 
 # If you are using modern or BungeeGuard IP forwarding, configure a file that contains a unique secret here.
 # The file is expected to be UTF-8 encoded and not empty.
@@ -49,7 +49,7 @@ announce-forge = false
 
 # If enabled (default is false) and the proxy is in online mode, Velocity will kick
 # any existing player who is online if a duplicate connection attempt is made.
-kick-existing-players = false
+kick-existing-players = true
 
 # Should Velocity pass server list ping requests to a backend server?
 # Available options:
@@ -72,26 +72,18 @@ enable-player-address-logging = true
 [servers]
 # Configure your servers here. Each key represents the server's name, and the value
 # represents the IP address of the server to connect to.
-lobby = "127.0.0.1:30066"
-factions = "127.0.0.1:30067"
-minigames = "127.0.0.1:30068"
+survival = "172.18.0.3/16:25565"
 
 # In what order we should try servers when a player logs in or is kicked from a server.
 try = [
-    "lobby"
+    "survival"
 ]
 
 [forced-hosts]
 # Configure your forced hosts here.
-"lobby.example.com" = [
-    "lobby"
-]
-"factions.example.com" = [
-    "factions"
-]
-"minigames.example.com" = [
-    "minigames"
-]
+# "lobby.example.com" = [
+#     "lobby"
+# ]
 
 [advanced]
 # How large a Minecraft packet has to be before we compress it. Setting this to zero will
