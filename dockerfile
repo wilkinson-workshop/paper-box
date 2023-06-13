@@ -35,6 +35,7 @@ RUN \
     --mount=type=bind,source=minecraft/wget_jars.sh,target=/opt/wget_jars.sh \
     /opt/wget_jars.sh
 
+<<<<<<< HEAD
 # Builds the docker cli binary from source.
 # -----------------------------------------------
 FROM ubuntu:latest AS DockerBuilder
@@ -49,6 +50,8 @@ RUN \
     --mount=type=bind,source=minecraft/build_docker.sh,target=/opt/build_docker.sh \
     /opt/build_docker.sh
 
+=======
+>>>>>>> 591f41b (remove docker builder)
 # Finalize our image. Include needed environment
 # variables, binaries and scripts
 # -----------------------------------------------
