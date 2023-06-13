@@ -1,5 +1,5 @@
 server/
-!server/*-dummy*
+!server/server-dummy*
 proxy/
 !proxy/*-dummy*
 .venv/
