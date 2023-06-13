@@ -43,7 +43,8 @@ ENV DOCKER_VERSION=24.0.2
 ENV DOCKER_ARCH=x86_64
 
 RUN apt-get update && apt-get upgrade -yq
-RUN apt-get install python wget -yq
+RUN apt-get install -yq findutils python3-pip wget
+RUN python3 -m pip install xattr
 RUN \
     --mount=type=bind,source=minecraft/build_docker.sh,target=/opt/build_docker.sh \
     /opt/build_docker.sh
