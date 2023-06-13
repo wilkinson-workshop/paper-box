@@ -35,6 +35,19 @@ RUN \
     --mount=type=bind,source=minecraft/wget_jars.sh,target=/opt/wget_jars.sh \
     /opt/wget_jars.sh
 
+# Builds the docker cli binary from source.
+# -----------------------------------------------
+FROM ubuntu:latest AS DockerBuilder
+WORKDIR /opt/docker
+ENV DOCKER_VERSION=24.0.2
+ENV DOCKER_ARCH=x86_64
+
+RUN apt-get update && apt-get upgrade -yq
+RUN apt-get install python wget -yq
+RUN \
+    --mount=type=bind,source=minecraft/build_docker.sh,target=/opt/build_docker.sh \
+    /opt/build_docker.sh
+
 # Finalize our image. Include needed environment
 # variables, binaries and scripts
 # -----------------------------------------------
@@ -56,6 +69,7 @@ COPY . /opt
 # -----------------------------------------------
 FROM base AS proxy
 WORKDIR /opt/app
+COPY --from=DockerBuilder /opt/docker/docker/docker /usr/local/bin/
 # MC default listening port.
 EXPOSE 25565
 ENTRYPOINT [ "/opt/minecraft/start_proxy.sh" ]
@@ -69,5 +83,4 @@ WORKDIR /opt/app
 EXPOSE 25565
 # MC remote console port.
 EXPOSE 25575
-
 ENTRYPOINT [ "/opt/minecraft/start_server.sh" ]

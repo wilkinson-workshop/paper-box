@@ -5,7 +5,12 @@ Manage and maintain container services for the
 Minecraft host.
 """
 
-import argparse, os, pathlib, subprocess, typing
+import argparse, os, pathlib, typing
+
+import docker
+
+docker_client = docker.from_env()
+docker_root   = pathlib.Path(__file__).parents[1]
 
 
 class ServicesNamespace(argparse.Namespace):
@@ -20,41 +25,31 @@ class ServicesNamespace(argparse.Namespace):
 def build_service(args: ServicesNamespace, target: str = None):
     if not target:
         target = args.target
-    return subprocess.call([
-        "docker",
-        "build",
-        ".",
-        f"--tag={args.tag}",
-        f"--target={target}"])
+
+    return docker_client.images.build(
+        path=docker_root,
+        tag=args.tag,
+        target=target)
 
 
 def start_service(args: ServicesNamespace):
     bind = pathlib.Path(args.bind).absolute()
 
-    create = [
-        "docker",
-        "create",
-        "--rm",
-        f"--name={args.name}",
-        f"--mount=type=bind,source={bind},target=/opt/app"]
-    if args.ports:
-        create.extend([f"-p={p}" for p in args.ports.split(",")])
-    create.append(args.tag)
-
-    rt = subprocess.call(create)
-
-    if rt > 0:
-        return rt
-
-    rt = subprocess.call([
-        "docker",
-        "start",
-        args.name])
-    return rt
+    ports = [f"-p={p}" for p in args.ports.split(",")] if args.ports else []
+    container = docker_client.containers.create(
+        args.tag,
+        name=args.name,
+        remove=True,
+        mounts=[f"type=bind,source={bind},target=/opt/app"],
+        ports=ports)
+    container.start()
+    return container
 
 
 def stop_service(args: ServicesNamespace):
-    return subprocess.call(["docker", "stop", args.name])
+    container = docker_client.containers.get(args.name)
+    container.stop()
+    return container
 
 
 def add_service_common_args(
