@@ -11,6 +11,7 @@ ARG java_runtime_xmx=1G
 # -----------------------------------------------
 FROM openjdk:19-oraclelinux8 AS JavaBuilder
 USER root
+
 RUN \
     --mount=type=bind,source=minecraft/build_java.sh,target=/opt/build_java.sh \
     /opt/build_java.sh
@@ -38,7 +39,7 @@ RUN \
 # Finalize our image. Include needed environment
 # variables, binaries and scripts
 # -----------------------------------------------
-FROM ubuntu:latest AS base
+FROM ubuntu:23.10 AS base
 ARG java_runtime_xms
 ARG java_runtime_xmx
 

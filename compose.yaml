@@ -1,0 +1,42 @@
+services:
+  proxy0x00:
+    ports:
+      - "25565:25565"
+    container_name: paper-mc-proxy0x00
+    build:
+      context: .
+      dockerfile: ./dockerfile
+      target: proxy
+    volumes:
+      - ./services/proxy/0x00:/opt/app:rw
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      paper-mc-backend:
+        ipv4_address: 172.57.132.2
+  # Servers should follow this pattern below.
+  survival0x00:
+    container_name: paper-mc-survival0x00
+    labels:
+      # Add more labels as needed to communicate
+      # the nature of each server.
+      - com.server.type=survival
+    build:
+      context: .
+      dockerfile: ./dockerfile
+      target: server
+    volumes:
+      - ./services/server/0x00:/opt/app:rw
+    networks:
+      paper-mc-backend:
+        ipv4_address: 172.57.132.3
+
+networks:
+  paper-mc-backend:
+    ipam:
+      driver: default
+      config:
+        - subnet: "172.57.132.0/16"
+      options:
+        alpha: "0"
+        beta: "1"
+        gamma: "2"

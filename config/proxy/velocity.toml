@@ -72,7 +72,7 @@ enable-player-address-logging = true
 [servers]
 # Configure your servers here. Each key represents the server's name, and the value
 # represents the IP address of the server to connect to.
-survival = "172.18.0.3/16:25565"
+survival = "172.57.132.3/16:25565"
 
 # In what order we should try servers when a player logs in or is kicked from a server.
 try = [
