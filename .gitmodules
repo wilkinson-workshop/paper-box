@@ -1,0 +1,3 @@
+[submodule "paper-box-configs"]
+	path = paper-box-configs
+	url = https://github.com/wilkinson-workshop/paper-box-configs

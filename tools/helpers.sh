@@ -57,7 +57,7 @@ sync_config() {
     ARGS=($@)
     for name in "${ARGS[@]:1}"
     do
-        sudo rsync -a config/$1 services/$1/$name
+        sudo rsync -a paper-mc-configs/$1 services/$1/$name
     done
 }
 

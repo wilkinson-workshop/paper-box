@@ -1,7 +1,7 @@
 .vscode/
 .venv
 .git*
-config/
+paper-mc-configs/
 services/
 tools/
 compose.yaml
