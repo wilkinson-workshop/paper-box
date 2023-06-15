@@ -26,23 +26,39 @@ build() {
     done
 }
 
+clean() {
+    docker compose rm
+    sudo rm -rf services/
+}
+
 init() {
-    docker compose start
+    docker compose create
+    start
+
+    sleep 5 # Wait for containers to start.
     update
 }
 
+start() {
+    docker compose start
+}
+
 update() {
-    sync_config proxy
-    sync_config survival
+    sync_config proxy '0x00'
+    sync_config survival '0x00'
     docker compose restart
 }
 
 sync_config() {
-    if [[ $# -ne 1 ]]; then
-        echo -e "sync_config expects 1 argument got $#"
+    if [[ $# -ne 2 ]]; then
+        echo -e "sync_config expects 2 argument got $#"
     fi
 
-    find services/$1 -maxdepth 1 -mindepth 1 -type d | xargs -I {} sudo rsync -a config/$1 {}
+    ARGS=($@)
+    for name in "${ARGS[@]:1}"
+    do
+        sudo rsync -a config/$1 services/$1/$name
+    done
 }
 
 $@
