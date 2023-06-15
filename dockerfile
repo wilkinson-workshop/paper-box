@@ -57,6 +57,8 @@ COPY . /opt
 # -----------------------------------------------
 FROM base AS proxy
 WORKDIR /opt/app
+COPY ./config/proxy/velocity.toml .
+
 # MC default listening port.
 EXPOSE 25565
 ENTRYPOINT [ "/opt/minecraft/start_proxy.sh" ]
