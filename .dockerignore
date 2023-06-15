@@ -1,3 +1,11 @@
 .vscode/
 .venv
+.git*
+config/
+services/
 tools/
+compose.yaml
+init.sh
+README.*
+dockerfile
+.dockerignore

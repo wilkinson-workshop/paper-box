@@ -18,4 +18,31 @@ userown() {
     find $2 | xargs sudo chown $1:$1
 }
 
+build() {
+    for tag in $@
+    do
+        docker build . --tag=wilkinsonk/paper-mc-proxy:$tag --target=proxy
+        docker build . --tag=wilkinsonk/paper-mc-server:$tag --target=server
+    done
+}
+
+init() {
+    docker compose start
+    update
+}
+
+update() {
+    sync_config proxy
+    sync_config survival
+    docker compose restart
+}
+
+sync_config() {
+    if [[ $# -ne 1 ]]; then
+        echo -e "sync_config expects 1 argument got $#"
+    fi
+
+    find services/$1 -maxdepth 1 -mindepth 1 -type d | xargs -I {} sudo rsync -a config/$1 {}
+}
+
 $@

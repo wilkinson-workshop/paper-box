@@ -49,16 +49,21 @@ ENV JAVA_RUNTIME_XMX=${java_runtime_xmx}
 ENV PATH="$PATH:$JAVA_HOME/bin"
 
 COPY --from=JavaBuilder /opt/jre-minimal /opt/jre-minimal
-COPY --from=JarCollector /opt/jars /opt/jars
 COPY . /opt
 
 # Builds the velocity image.
 # docker build . --tag=<tag-name> --target=proxy
 # -----------------------------------------------
 FROM base AS proxy
-WORKDIR /opt/app
-COPY ./config/proxy/velocity.toml .
+ARG velocity_build
+ARG velocity_version
 
+COPY \
+    --from=JarCollector \
+    /opt/jars/velocity-${velocity_version}-${velocity_build}.jar \
+    /opt/jars/velocity-${velocity_version}-${velocity_build}.jar
+
+WORKDIR /opt/app
 # MC default listening port.
 EXPOSE 25565
 ENTRYPOINT [ "/opt/minecraft/start_proxy.sh" ]
@@ -67,6 +72,14 @@ ENTRYPOINT [ "/opt/minecraft/start_proxy.sh" ]
 # docker build . --tag=<tag-name> --target=server
 # -----------------------------------------------
 FROM base AS server
+ARG paper_build
+ARG paper_version
+
+COPY \
+    --from=JarCollector \
+    /opt/jars/paper-${paper_version}-${paper_build}.jar \
+    /opt/jars/paper-${paper_version}-${paper_build}.jar
+
 WORKDIR /opt/app
 # MC default listening port.
 EXPOSE 25565
