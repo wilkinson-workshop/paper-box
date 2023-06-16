@@ -3,7 +3,7 @@ services:
     ports:
       - "25565:25565"
     container_name: paper-mc-proxy0x00
-    image: wilkinsonk/paper-mc-proxy:r1
+    image: wilkinsonk/paper-mc-proxy:1.19.4
     labels:
       - com.proxy.id=0x00
     volumes:
@@ -36,7 +36,7 @@ services:
     depends_on:
       - proxy0x00
     container_name: paper-mc-server0x00
-    image: wilkinsonk/paper-mc-server:r1
+    image: wilkinsonk/paper-mc-server:1.19.4
     labels:
       # Add more labels as needed to communicate
       # the nature of each server.
