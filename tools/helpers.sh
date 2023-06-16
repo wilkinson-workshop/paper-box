@@ -19,7 +19,7 @@ init() {
     docker compose create
     start
 
-    sleep 5 # Wait for containers to start.
+    sleep 10 # Wait for containers to fully start.
     update_all
 }
 
@@ -27,10 +27,18 @@ start() {
     docker compose start
 }
 
+stop() {
+    docker compose stop
+}
+
 update_all() {
-    update proxy 0x00
-    update nginx 0x00
-    update survival 0x00
+    sync_config proxy 0x00
+    sync_config nginx 0x00
+    sync_config survival 0x00
+
+    # Force restart of all services to lock in
+    # config updates.
+    docker compose restart
 }
 
 update() {
