@@ -13,6 +13,21 @@ services:
       paper-mc-backend:
         ipv4_address: 172.57.132.2
 
+  # NGINX service used later for things like
+  # web server, and server maps.
+  nginx-web-proxy0x00:
+    ports:
+      - "80:80"
+      - "443:443"
+    container_name: paper-mc-web-proxy0x00
+    image: nginx:stable-alpine3.17-slim
+    volumes:
+      - ./paper-box-configs/nginx/www:/usr/share/nginx/html:ro
+      - ./paper-box-configs/nginx/conf:/etc/nginx/conf:ro
+    networks:
+      paper-mc-backend:
+        ipv4_address: 172.57.132.3
+
   # Servers should follow this pattern below.
   server0x00:
     depends_on:
@@ -28,7 +43,7 @@ services:
       - ./services/survival/0x00:/opt/app:rw
     networks:
       paper-mc-backend:
-        ipv4_address: 172.57.132.3
+        ipv4_address: 172.57.132.4
 
 networks:
   paper-mc-backend:
