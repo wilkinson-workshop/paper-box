@@ -36,23 +36,46 @@ init() {
     start
 
     sleep 5 # Wait for containers to start.
-    update
+    update_all
 }
 
 start() {
     docker compose start
 }
 
+update_all() {
+    update proxy 0x00
+    update nginx 0x00
+    update survival 0x00
+}
+
 update() {
-    sync_config proxy '0x00'
-    sync_config survival '0x00'
-    docker compose restart
+    if [[ $# -lt 2 ]]; then
+        echo -e "sync_config expects 2 argument got $#"
+        exit 1
+    fi
+
+    sync_config $@
+
+    ARGS=($@)
+    for name in "${ARGS[@]:1}"
+    do
+        if [[ $1 -eq "nginx" ]]; then
+            docker compose restart "web-proxy${name}"
+        else
+            docker compose restart "${1}${name}"
+        fi
+    done
 }
 
 sync_config() {
-    if [[ $# -ne 2 ]]; then
+    if [[ $# -lt 2 ]]; then
         echo -e "sync_config expects 2 argument got $#"
+        exit 1
     fi
+
+    # If dir doesn't exist, make it.
+    [[ ! -d services/$1 ]] && mkdir -p services/$1
 
     ARGS=($@)
     for name in "${ARGS[@]:1}"
