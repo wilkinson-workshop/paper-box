@@ -11,6 +11,8 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
     networks:
       paper-mc-backend:
+        ipv4_address: 172.58.132.2
+      paper-mc-frontend:
         ipv4_address: 172.57.132.2
 
   # NGINX service used later for things like
@@ -22,12 +24,12 @@ services:
     container_name: paper-mc-web-proxy0x00
     image: nginx:stable-alpine3.17-slim
     volumes:
+      - ./services/nginx/0x00/etc/:/etc/nginx/:ro
       - ./services/nginx/0x00/www:/usr/share/nginx/html:ro
-      - ./services/nginx/0x00/conf:/etc/nginx/conf:ro
-      - ./services/nginx/0x00/logs:/var/log/nginx/log:rw
+      - ./services/nginx/0x00/logs:/var/log/nginx/logs:rw
     networks:
       paper-mc-backend:
-        ipv4_address: 172.57.132.3
+        ipv4_address: 172.58.132.3
 
   # Servers should follow this pattern below.
   server0x00:
@@ -44,10 +46,26 @@ services:
       - ./services/survival/0x00:/opt/app:rw
     networks:
       paper-mc-backend:
-        ipv4_address: 172.57.132.4
+        ipv4_address: 172.58.132.4
+      paper-mc-frontend:
+        ipv4_address: 172.57.132.3
 
 networks:
+  # Use for back facing applications that don't
+  # need access to the outside world.
+  # i.e. datbases.
   paper-mc-backend:
+    ipam:
+      driver: default
+      config:
+        - subnet: "172.58.132.0/16"
+      options:
+        alpha: "0"
+        beta: "1"
+        gamma: "2"
+  # Use for front facing applications.
+  # i.e. Minecraft and server proxy.
+  paper-mc-frontend:
     ipam:
       driver: default
       config:
