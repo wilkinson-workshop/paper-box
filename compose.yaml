@@ -15,15 +15,16 @@ services:
 
   # NGINX service used later for things like
   # web server, and server maps.
-  nginx-web-proxy0x00:
+  web-proxy0x00:
     ports:
       - "80:80"
       - "443:443"
     container_name: paper-mc-web-proxy0x00
     image: nginx:stable-alpine3.17-slim
     volumes:
-      - ./paper-box-configs/nginx/www:/usr/share/nginx/html:ro
-      - ./paper-box-configs/nginx/conf:/etc/nginx/conf:ro
+      - ./services/nginx/0x00/www:/usr/share/nginx/html:ro
+      - ./services/nginx/0x00/conf:/etc/nginx/conf:ro
+      - ./services/nginx/0x00/logs:/var/log/nginx/log:rw
     networks:
       paper-mc-backend:
         ipv4_address: 172.57.132.3
