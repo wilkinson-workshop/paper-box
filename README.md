@@ -28,3 +28,13 @@ for frequent use commands.
   plugins and assets then restarts target services.
 - **sync_config** [name] [id...] | rsync shortcut to update configs,
   plugins and assets.
+
+# Install Plugins Tool
+For installing plugins required for different environments use the
+`tools/install_plugins.sh` tool. Our services are separated, as
+configured, into different kinds of containers and per kind of server.
+
+### Install Plugins Commands
+- **server** [server_type] | Pulls in the required plugin files from
+  their respective remotes. Plugins are pulled into
+  `paper-box-configs/<server_type>/plugins/`.
