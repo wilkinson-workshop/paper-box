@@ -20,7 +20,7 @@ init() {
     start
 
     sleep 10 # Wait for containers to fully start.
-    helpers/install_plugins.sh survival
+    tools/install_plugins.sh server survival
     update_all
 }
 
