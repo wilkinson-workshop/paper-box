@@ -6,7 +6,7 @@ After cloning this repository run the following commands for final
 setup:
 ```bash
 git submodule init paper-box-configs
-tools/helpers.sh init
+tools/helpers.sh build latest && tools/helpers.sh init
 ```
 
 # Helpers Tool
