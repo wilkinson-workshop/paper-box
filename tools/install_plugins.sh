@@ -48,7 +48,10 @@ server() {
     [[ ! -d $TARGET_DIR/plugins ]] && mkdir $TARGET_DIR/plugins
 
     survival() {
-        server_common()
+        # Install common plugins.
+        server_common
+
+        # Install plugins local to survival.
         cached_wget_iter \
             https://github.com/Nuytemans-Dieter/BetterSleeping/releases/download/v4.0.2/BetterSleeping.jar \
             https://github.com/BlueMap-Minecraft/BlueMap/releases/download/v3.14/BlueMap-3.14-spigot.jar \
