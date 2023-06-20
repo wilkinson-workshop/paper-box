@@ -58,7 +58,7 @@ server_common() {
         https://github.com/MilkBowl/Vault/releases/download/1.7.3/Vault.jar
 
     # LuckPerms
-    from_source LuckPerms LuckPerms
+    from_source LuckPerms
 }
 
 server() {
