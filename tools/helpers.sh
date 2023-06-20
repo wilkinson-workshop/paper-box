@@ -13,6 +13,7 @@ build() {
 clean() {
     sudo docker compose rm
     sudo rm -rf services/
+    find paper-box-configs -type f -iname "*.jar" | grep "plugins/" | xargs rm
 }
 
 init() {
