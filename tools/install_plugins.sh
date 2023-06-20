@@ -21,6 +21,18 @@ cached_wget_iter() {
     done
 }
 
+server_common() {
+    cached_wget_iter \
+        https://github.com/EssentialsX/Essentials/releases/download/2.20.0/EssentialsX-2.20.0.jar \
+        https://github.com/EssentialsX/Essentials/releases/download/2.20.0/EssentialsXAntiBuild-2.20.0.jar \
+        https://github.com/EssentialsX/Essentials/releases/download/2.20.0/EssentialsXChat-2.20.0.jar \
+        https://github.com/EssentialsX/Essentials/releases/download/2.20.0/EssentialsXDiscord-2.20.0.jar \
+        https://github.com/EssentialsX/Essentials/releases/download/2.20.0/EssentialsXDiscordLink-2.20.0.jar \
+        https://github.com/EssentialsX/Essentials/releases/download/2.20.0/EssentialsXGeoIP-2.20.0.jar \
+        https://github.com/EssentialsX/Essentials/releases/download/2.20.0/EssentialsXProtect-2.20.0.jar \
+        https://github.com/EssentialsX/Essentials/releases/download/2.20.0/EssentialsXSpawn-2.20.0.jar
+}
+
 server() {
     if [[ $# -ne 1 ]]; then
         echo -e "server [type]"
@@ -36,12 +48,10 @@ server() {
     [[ ! -d $TARGET_DIR/plugins ]] && mkdir $TARGET_DIR/plugins
 
     survival() {
-
-        # BetterSleeping
+        server_common()
         cached_wget_iter \
             https://github.com/Nuytemans-Dieter/BetterSleeping/releases/download/v4.0.2/BetterSleeping.jar \
             https://github.com/BlueMap-Minecraft/BlueMap/releases/download/v3.14/BlueMap-3.14-spigot.jar \
-            https://github.com/MC-Linker/Discord-Linker/releases/download/Discord-Linker-3.1.3/Discord-Linker-3.1.3.jar \
             https://github.com/Gecolay/GSit/releases/download/1.4.5/GSit-1.4.5.jar \
             https://github.com/timbru31/SilkSpawners/releases/download/silkspawners-7.4.0/SilkSpawners.jar
     }
