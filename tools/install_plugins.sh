@@ -21,7 +21,15 @@ cached_wget_iter() {
     done
 }
 
+from_source() {
+    source_name=$(basename $1)
+    source_name=${source_name%.*}
+
+    
+}
+
 server_common() {
+    # EssentialsX assets
     cached_wget_iter \
         https://github.com/EssentialsX/Essentials/releases/download/2.20.0/EssentialsX-2.20.0.jar \
         https://github.com/EssentialsX/Essentials/releases/download/2.20.0/EssentialsXAntiBuild-2.20.0.jar \
@@ -31,6 +39,18 @@ server_common() {
         https://github.com/EssentialsX/Essentials/releases/download/2.20.0/EssentialsXGeoIP-2.20.0.jar \
         https://github.com/EssentialsX/Essentials/releases/download/2.20.0/EssentialsXProtect-2.20.0.jar \
         https://github.com/EssentialsX/Essentials/releases/download/2.20.0/EssentialsXSpawn-2.20.0.jar
+
+    # Vault
+    cached_wget_iter \
+        https://github.com/MilkBowl/Vault/releases/download/1.7.3/Vault.jar
+
+    # LuckPerms
+    git clone https://github.com/LuckPerms/LuckPerms.git
+    pushd LuckPerms
+    ./gradlew build
+    find loader/build/libs -type f -iname "*.jar" | xargs -I {} cp {} ../
+    find build/libs -type f -iname "*.jar" | xargs -I {} cp {} ../
+    popd # Popped from LuckPerms.
 }
 
 server() {
