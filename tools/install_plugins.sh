@@ -55,10 +55,8 @@ server_common() {
 
     # Vault
     cached_wget_iter \
-        https://github.com/MilkBowl/Vault/releases/download/1.7.3/Vault.jar
-
-    # LuckPerms
-    from_source LuckPerms
+        https://github.com/MilkBowl/Vault/releases/download/1.7.3/Vault.jar \
+        https://download.luckperms.net/1503/bukkit/loader/LuckPerms-Bukkit-5.4.89.jar
 }
 
 server() {

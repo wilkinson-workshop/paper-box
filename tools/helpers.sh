@@ -5,18 +5,18 @@
 build() {
     for tag in $@
     do
-        docker build . --tag=wilkinsonk/paper-mc-proxy:$tag --target=proxy
-        docker build . --tag=wilkinsonk/paper-mc-server:$tag --target=server
+        sudo docker build . --tag=wilkinsonk/paper-mc-proxy:$tag --target=proxy
+        sudo docker build . --tag=wilkinsonk/paper-mc-server:$tag --target=server
     done
 }
 
 clean() {
-    docker compose rm
+    sudo docker compose rm
     sudo rm -rf services/
 }
 
 init() {
-    docker compose create
+    sudo docker compose create
     start
 
     sleep 10 # Wait for containers to fully start.
@@ -25,11 +25,11 @@ init() {
 }
 
 start() {
-    docker compose start
+    sudo docker compose start
 }
 
 stop() {
-    docker compose stop
+    sudo docker compose stop
 }
 
 update_all() {
@@ -39,7 +39,7 @@ update_all() {
 
     # Force restart of all services to lock in
     # config updates.
-    docker compose restart
+    sudo docker compose restart
 }
 
 update() {
@@ -54,9 +54,9 @@ update() {
     for name in "${ARGS[@]:1}"
     do
         if [[ $1 -eq "nginx" ]]; then
-            docker compose restart "web-proxy${name}"
+            sudo docker compose restart "web-proxy${name}"
         else
-            docker compose restart "${1}${name}"
+            sudo docker compose restart "${1}${name}"
         fi
     done
 }
