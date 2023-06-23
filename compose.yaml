@@ -33,6 +33,8 @@ services:
 
   # Servers should follow this pattern below.
   server0x00:
+    ports:
+      - 25575:25575
     depends_on:
       - proxy0x00
     container_name: paper-mc-server0x00
@@ -44,6 +46,9 @@ services:
       - com.server.id=0x00
     volumes:
       - ./services/survival/0x00:/opt/app:rw
+    environment:
+      - JAVA_RUNTIME_XMX=4G
+      - JAVA_RUNTIME_XMS=4G
     networks:
       paper-mc-backend:
         ipv4_address: 172.58.132.4
