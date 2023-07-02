@@ -47,8 +47,8 @@ services:
     volumes:
       - ./services/survival/0x00:/opt/app:rw
     environment:
-      - JAVA_RUNTIME_XMX=4G
-      - JAVA_RUNTIME_XMS=4G
+      - JAVA_RUNTIME_XMX=6G
+      - JAVA_RUNTIME_XMS=6G
     networks:
       paper-mc-backend:
         ipv4_address: 172.58.132.4
