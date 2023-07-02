@@ -42,6 +42,12 @@ from_source() {
 }
 
 server_common() {
+
+    # World Edit assets \
+    cached_wget_iter \
+        https://dev.bukkit.org/projects/worldedit/files/4445117/download \
+        https://dev.bukkit.org/projects/worldguard/files/4554903/download
+
     # EssentialsX assets
     cached_wget_iter \
         https://github.com/EssentialsX/Essentials/releases/download/2.20.0/EssentialsX-2.20.0.jar \
